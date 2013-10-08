@@ -1,4 +1,4 @@
-//How do we handle the starfield? Can we treat this as a "planet" where the vertices are white points and not connect? 
+//How do we handle the starfield? Can we treat this as a "planet" where the vertices are white points and not connected? It would be cool to look at the stars and see a spherical starfield with our solar system orbiting in the center.  
 
 
 Classes:
@@ -45,7 +45,9 @@ Rocketship
 		vec3 currentPosition //world coordinates
 		currentForward //The current direction that the rocket is facing. 
 		bool headLampOn;
-		bool freeFlyOn; //Is free fly currently activated?
+		bool freeFlyOn; //Is free fly currently activated? This should be turned off when entering orbit mode. 
+
+	Stores modified version of the primitive geometry. 
 
 	Methods
 		Draw 
@@ -77,6 +79,10 @@ Rocketship
 		orbit(planet)
 			Takes a planet as input, and sets an orbit in relation to the planet's center of mass, its radius, and its heightScale. When orbit is on, freesteer is allowed, but the orbit itself will NOT change. The freesteer rotation matrix must be applied after the ship has been placed at the proper world coordinates.
 			
+
+Geometry Class
+	Stores geometric primitives
+
 
 Application
 	Members:
