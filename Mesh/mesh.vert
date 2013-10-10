@@ -9,7 +9,7 @@ uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 uniform mat3 normalMatrix;
 
-out vec3 position;
+out vec3 eyeposition;
 out vec3 normal;
 flat out vec3 color;
 
@@ -21,7 +21,7 @@ void main() {
 
 	mat4 modelviewMatrix = viewMatrix * worldMatrix;
 
-	position = vec3(modelviewMatrix * vec4(VertexPosition, 1.0f));
+	eyeposition = vec3(modelviewMatrix * vec4(VertexPosition, 1.0f));
 
 	color = VertexColor;
 }
