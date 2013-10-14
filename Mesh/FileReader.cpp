@@ -7,15 +7,15 @@ using namespace std;
 
 vector<float> FileReader(string inputFile)
 {
+	cout << "Reading Selected Mars File...";
 	vector<float> myHeightMap;
-	vector<string> unconvertedHeightMap;
 	ifstream heightMapFile(inputFile);
 
 	if(!heightMapFile) //Always test the file open.
     {
-                cout<<"Error opening output file"<<endl;
+                cout<<"Error opening input file"<<endl;
                 system("pause");
-                return;
+                return myHeightMap;
     }
 
 	while(!heightMapFile.eof())
@@ -26,8 +26,8 @@ vector<float> FileReader(string inputFile)
 			myHeightMap.push_back(stof(thisValue));
 		}
     }
-
-	for(int i; i < myHeightMap.size(); i++)
+	/**************************Debugging test for file reader. 
+	for(int i = myHeightMap.size()-1; i < myHeightMap.size(); i++)
 	{
 		if(i % int(myHeightMap[0]) == 0 || i == 3)
 		{
@@ -35,7 +35,9 @@ vector<float> FileReader(string inputFile)
 		}
 		cout << myHeightMap[i] << "\t";
 	}
+	//*/
 
+	cout << "COMPLETED" << endl;
 	return myHeightMap;
 }
 

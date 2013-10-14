@@ -1,1 +1,3 @@
-vector<float> FileReader(string myFile);
+#include <vector>
+#include <string>
+std::vector<float> FileReader(std::string myFile);

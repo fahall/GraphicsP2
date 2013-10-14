@@ -45,27 +45,57 @@ GLuint normalMatrixUniform;
 vector<vec3> positionData;
 vector<vec3> normalData;
 vector<vec3> colorData;
-vector<GLshort> indexData;
+vector<GLuint> indexData;
 
 //heightInformation
-int heightModifier = 5;
+float heightModifier = 1.0;
 vector<float> heightMap;
 
 void init() {
 
+
+	int numRows = 720;
+	int numCols = 360;
+	
 	//Extract the heightmap from a file.
 	if(selectedResolution == 1)
 	{
-		heightMap = FileReader("Mars.txt");
+		heightMap = FileReader("mars_low_rez.txt");
 
-		int numRows = heightMap[0];
-		int numCols = heightMap[1];
+		numRows = (int)heightMap[0];
+		numCols = (int)heightMap[1];
+
+		cout << "rows: " << numRows << endl;
+		cout << "cols: " << numCols << endl;
+	}
+	else if (selectedResolution == 2)
+	{
+		heightMap = FileReader("mars_med_rez.txt");
+
+		numRows = (int)heightMap[0];
+		numCols = (int)heightMap[1];
+
+		cout << "rows: " << numRows << endl;
+		cout << "cols: " << numCols << endl;
+	}
+		else if (selectedResolution == 3)
+	{
+		heightMap = FileReader("mars.txt");
+
+		numRows = (int)heightMap[0];
+		numCols = (int)heightMap[1];
+
+		cout << "rows: " << numRows << endl;
+		cout << "cols: " << numCols << endl;
 	}
 	else
 	{
-		int numRows = 360;
-		int numCols = 140;
+		for(int i = 0; i <= numRows * numCols + 2; i++)
+		{
+			heightMap.push_back(1.0f);
+		}
 	}
+
 
 	//setup tranformation variables theta and phi
 
@@ -90,9 +120,10 @@ void init() {
 	}
 
 	//init indices
+
 	for(int i = 0; i < numRows-1; i++) {
 		for(int j = 0; j < numCols-1; j++) {
-			int index = i * numCols + j;
+			unsigned long int index = i * numCols + j;
 
 			indexData.push_back(index);
 			indexData.push_back(index+1);
@@ -106,10 +137,11 @@ void init() {
 	}
 
 	//Hold the current "heightMap" index, we start at 2 because [0] & [1] are our texture dimensions
-	int currentHeightMapIndex = 2;
+	unsigned long int currentHeightMapIndex = 0;
 
 	//apply transformations to vertices
 	for(int row = 0; row < numRows; row++) {
+
 		//get theta for current row
 		theta = (float)( PI - (thetaStep * row) );
 
@@ -117,7 +149,7 @@ void init() {
 			//get phi for current col
 			phi = ( phiStep * col );
 			//get current vertex index
-			unsigned int index = (row * numCols) + col;
+			unsigned long int index = (row * numCols) + col;
 			
 			//Get the heightMapValue at this index
 			float currentHeightMapValue = heightMap[currentHeightMapIndex] * heightModifier;
@@ -128,7 +160,6 @@ void init() {
 			//if we are at first or last row, meaning we are at top or bottom of poles, just make each vertex with that row/col
 			//to be (0, 1, 0) or (0, -1, 0)
 			if(row == numRows-1) {
-
 				positionData.at(index) = vec3(0.0f, +currentRadius, 0.0f);
 			}else if(row == 0) {
 				positionData.at(index) = vec3(0.0f, -currentRadius, 0.0f);
@@ -156,8 +187,8 @@ void init() {
 	//initialize program
 	GLuint vertShader, fragShader;
 
-	vertShader = LoadShader(GL_VERTEX_SHADER, "L:/Desktop/Mesh/mesh.vert");
-	fragShader = LoadShader(GL_FRAGMENT_SHADER, "L:/Desktop/Mesh/mesh.frag");
+	vertShader = LoadShader(GL_VERTEX_SHADER, "C:/Users/Shanalex/Dropbox/CS559/Project2/Mesh/mesh.vert");
+	fragShader = LoadShader(GL_FRAGMENT_SHADER, "C:/Users/Shanalex/Dropbox/CS559/Project2/Mesh/mesh.frag");
 
 	program = CreateProgram(vertShader, fragShader);
 
@@ -199,7 +230,7 @@ void init() {
 
 	glGenBuffers(1, &elementBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLshort) * indexData.size(), (GLshort*)indexData.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * indexData.size(), (GLuint*)indexData.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	glGenVertexArrays(1, &vao);
@@ -234,7 +265,7 @@ void render() {
 
 	mat4 world(1.0f);
 	//world[0].x = world[1].y = 0.5f; //scale down to half size, if I scale, must us normal matrix even though uniform scale
-	world[3] = glm::vec4(5.0f, 3.0f, -20.0f, 1.0f); //move away, light at origin
+	world[3] = glm::vec4(0.0f, 0.0f, -0.0f, 1.0f); //move away, light at origin
 	glUniformMatrix4fv(worldUniform, 1, GL_FALSE, glm::value_ptr(world));
 
 	view = CalcViewMatrix(cam.camPosition, cam.camTarget, cam.upDirection);
@@ -247,7 +278,7 @@ void render() {
 
 	glUniformMatrix4fv(normalMatrixUniform, 1, GL_FALSE, glm::value_ptr(normalMatrix));
 
-	glDrawElements(GL_TRIANGLES, indexData.size(), GL_UNSIGNED_SHORT, 0);
+	glDrawElements(GL_TRIANGLES, indexData.size(), GL_UNSIGNED_INT, 0);
 
 
 	glBindVertexArray(0);

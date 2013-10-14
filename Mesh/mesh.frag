@@ -34,9 +34,10 @@ vec3 ads() {
 	vec3 ambient = ambientLightColor * ambientMatColor;
 
 
-	//vec3 diffuse = (L.x*N.x + L.y*N.y + L.z*N.z) * diffuseLightColor.x;
-	//diffuse = dot(L, N) *  diffuseLightColor.y;
-	//diffuse = dot(L, N) * diffuseLightColor.z;
+	//vec3 diffuse;
+	//diffuse.x = dot(L, N) * diffuseLightColor.x;
+	//diffuse.y = dot(L, N) * diffuseLightColor.y;
+	//diffuse.z = dot(L, N) * diffuseLightColor.z;
 
 
 
@@ -44,12 +45,12 @@ vec3 ads() {
 	
 	
 	
-	return ambient;
+	return ambient;// + diffuse;
 	
 }
 	
 
 void main() {
 	FragColor = vec4(ads(), 1.0f);
-	//FragColor = vec4(0.0f, 1.0f, 0.5f, 1.0f);
+	//FragColor = vec4(0.0f, 0.0f, 1.0f, 1.0f);
 }

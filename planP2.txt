@@ -14,7 +14,8 @@ Planet
 		spinRate
 		orbitSize
 		orbitSpeed
-		currentPosition //World coordinates
+		currentPosition //World coordina
+		tes
 	
 	Methods: 
 		buildGeometry

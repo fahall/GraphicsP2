@@ -1,19 +1,20 @@
-﻿Build started 10/8/2013 7:25:55 PM.
-     1>Project "\\wfs1\users$\greene\Desktop\Mesh\Mesh.vcxproj" on node 2 (Build target(s)).
+﻿Build started 10/13/2013 10:58:27 AM.
+     1>Project "C:\Users\Shanalex\Dropbox\CS559\Project2\Mesh\Mesh.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Mesh.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\Shanalex\Documents\Programming\graphicsGL /I"C:\Program Files (x86)\glew\include" /I"C:\Program Files (x86)\glm" /I"C:\Program Files (x86)\freeglut\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\wfs1\users$\greene\Desktop\Mesh\Debug\Mesh.exe" /INCREMENTAL /NOLOGO glew32.lib GraphicsGL.lib freeglut.lib GraphicsGL.lib freeglut.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"\\wfs1\users$\greene\Desktop\Mesh\Debug\Mesh.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\wfs1\users$\greene\Desktop\Mesh\Debug\Mesh.lib" /MACHINE:X86 Debug\Cam.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Shanalex\Dropbox\CS559\Project2\Mesh\Debug\Mesh.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\glew\lib\Release\Win32" /LIBPATH:C:\Users\Shanalex\Documents\Programming\graphicsGL /LIBPATH:"C:\Program Files (x86)\freeglut\lib" glew32.lib freeglut.lib GraphicsGL.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Shanalex\Dropbox\CS559\Project2\Mesh\Debug\Mesh.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Shanalex\Dropbox\CS559\Project2\Mesh\Debug\Mesh.lib" /MACHINE:X86 Debug\Cam.obj
+         Debug\FileReader.obj
          Debug\main.obj
-         Mesh.vcxproj -> \\wfs1\users$\greene\Desktop\Mesh\Debug\Mesh.exe
+         Mesh.vcxproj -> C:\Users\Shanalex\Dropbox\CS559\Project2\Mesh\Debug\Mesh.exe
        FinalizeBuildStatus:
          Deleting file "Debug\Mesh.unsuccessfulbuild".
          Touching "Debug\Mesh.lastbuildstate".
-     1>Done Building Project "\\wfs1\users$\greene\Desktop\Mesh\Mesh.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Users\Shanalex\Dropbox\CS559\Project2\Mesh\Mesh.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:04.77
+Time Elapsed 00:00:01.70
