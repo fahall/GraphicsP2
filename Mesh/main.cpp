@@ -169,10 +169,7 @@ void init() {
 				y = currentRadius * cosf(theta);
 				z = currentRadius * sinf(theta) * sinf(phi);
 				positionData.at(index) = vec3(x, y, z);
-				//now that we have our final vertex positions, add normals
-				vec3 n = positionData.at(index);
-				n = glm::normalize(n);
-				normalData.push_back(n);
+
 				//add color attribute
 				colorData.push_back(vec3(0.3f, 0.2f, 0.0f));
 			}
@@ -181,6 +178,64 @@ void init() {
 
 		} //end inner for()
 	} //end outer for()
+
+//now that we have our final vertex positions, add normals
+
+	for (int i = 0; i < numRows ; i++) 
+	{
+		for (int j = 0; j < numCols; j++)
+		{
+			
+			
+			GLuint index = i * numCols + j;
+			GLuint upLeft, upMiddle, upRight, midLeft, midRight, lowLeft, lowMiddle, lowRight;
+			if(i < numRows - 1) //For all rows except top
+			{
+				upLeft = (i + 1) * numCols + (j - 1);
+				upMiddle = (i + 1) * numCols + j;
+				upRight = (i + 1) * numCols + (j + 1);
+			}
+			else //For top row
+			{
+				upLeft = (0, 0, 0);
+				upMiddle = (0, 0, 0);
+				upRight = (0, 0, 0);
+			}
+
+				midLeft = (i) * numCols + (j - 1);
+
+			GLuint midRight = (i) * numCols + (j + 1);
+
+			if(i > 0) //For all rows except bottom
+			{
+				lowLeft = (i - 1) * numCols + (j - 1);
+				lowMiddle = (i - 1) * numCols + j;
+				lowRight = (i + 1) * numCols + j;
+			}
+			else //For bottom row
+			{
+				GLuint lowLeft = (0, 0, 0);
+				GLuint lowMiddle = (0, 0, 0);
+				GLuint lowRight = (0, 0, 0);
+			}
+
+
+			//Handle Left and Rightmost columns with special if-statement.********************************************************************************************
+			
+			vec3 upRightTriangle = calculateSufaceNormal(positionData.at(index), positionData.at(upMiddle), positionData.at(midRight));
+			vec3 downRightTriangleUpper = calculateSufaceNormal(positionData.at(index), positionData.at(midRight), positionData.at(lowRight));
+			vec3 downRightTriangleLower = calculateSufaceNormal(positionData.at(index), positionData.at(lowRight), positionData.at(lowMiddle));
+			vec3 downLeftTriangle = calculateSufaceNormal(positionData.at(index), positionData.at(lowMiddle), positionData.at(midLeft));
+			vec3 upLeftTriangleLower = calculateSufaceNormal(positionData.at(index), positionData.at(midLeft), positionData.at(upLeft));
+			vec3 upLeftTriangleUpper = calculateSufaceNormal(positionData.at(index), positionData.at(upLeft), positionData.at(upMiddle));
+
+			vec3 thisNormal = glm::normalize(upRightTriangle + downRightTriangleUpper + downRightTriangleLower + downLeftTriangle + upLeftTriangleLower + upLeftTriangleUpper);
+			normalData.push_back(thisNormal);
+
+			
+
+		}
+	}
 
 
 
@@ -317,6 +372,19 @@ void keyboard(unsigned char key, int x, int y) {
 		glutLeaveMainLoop();
 		return;
 	}
+}
+
+
+//Calculates the surface normal of a triangle and returns a normalized vector
+vec3 calculateSufaceNormal (vec3 position1, vec3 position2, vec3 position3)
+{
+	vec3 Normal;
+	vec3 U = position2 - position1;
+	vec3 V = position3 - position1;
+
+	Normal = glm::cross(U,V);
+
+	return glm::normalize(Normal);
 }
 
 
