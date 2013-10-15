@@ -191,9 +191,23 @@ void init() {
 			GLuint upLeft, upMiddle, upRight, midLeft, midRight, lowLeft, lowMiddle, lowRight;
 			if(i < numRows - 1) //For all rows except top
 			{
-				upLeft = (i + 1) * numCols + (j - 1);
+				if(j != 0)
+				{
+					upLeft = (i + 1) * numCols + (j - 1);
+				}
+				else //If we are in the left most column, loop around to the farthest right, since we are using a sphere
+				{
+					upLeft = (i + 1) * numCols + (numCols - 2);
+				}
 				upMiddle = (i + 1) * numCols + j;
-				upRight = (i + 1) * numCols + (j + 1);
+				if( j != (numCols - 1))
+				{
+					upRight = (i + 1) * numCols + (j + 1);
+				}
+				else //If we are in right most column, wrap around
+				{
+					upRight = (i + 1) * numCols + 1;
+				}
 			}
 			else //For top row
 			{
@@ -202,15 +216,45 @@ void init() {
 				upRight = (0, 0, 0);
 			}
 
+			if(j != 0)
+			{
 				midLeft = (i) * numCols + (j - 1);
+			}
+			else //If we are on the left most column, wrap around
+			{
+				midLeft = i * numCols + numCols - 2;
+			}
 
-			GLuint midRight = (i) * numCols + (j + 1);
+			if (j != (numCols - 1))
+			{
+				midRight = (i) * numCols + (j + 1);
+			}
+			else //If we are in the right most column, wrap around
+			{
+				midRight = i * numCols + 1; 
+			}
 
 			if(i > 0) //For all rows except bottom
 			{
-				lowLeft = (i - 1) * numCols + (j - 1);
+				if (j != 0)
+				{
+					lowLeft = (i - 1) * numCols + (j - 1);
+				}
+				else //If we are on the left most column, wrap around
+				{
+					lowLeft = (i - 1) * numCols + numCols - 2;
+				}
+
 				lowMiddle = (i - 1) * numCols + j;
-				lowRight = (i + 1) * numCols + j;
+
+				if(j != (numCols - 1))
+				{
+					lowRight = (i - 1) * numCols + (j + 1);
+				}
+				else //If we are on the right most column, wrap around
+				{
+					lowRight = (i - 1) * numCols + 1;
+				}
 			}
 			else //For bottom row
 			{
@@ -220,19 +264,17 @@ void init() {
 			}
 
 
-			//Handle Left and Rightmost columns with special if-statement.********************************************************************************************
 			
-			vec3 upRightTriangle = calculateSufaceNormal(positionData.at(index), positionData.at(upMiddle), positionData.at(midRight));
-			vec3 downRightTriangleUpper = calculateSufaceNormal(positionData.at(index), positionData.at(midRight), positionData.at(lowRight));
-			vec3 downRightTriangleLower = calculateSufaceNormal(positionData.at(index), positionData.at(lowRight), positionData.at(lowMiddle));
-			vec3 downLeftTriangle = calculateSufaceNormal(positionData.at(index), positionData.at(lowMiddle), positionData.at(midLeft));
-			vec3 upLeftTriangleLower = calculateSufaceNormal(positionData.at(index), positionData.at(midLeft), positionData.at(upLeft));
-			vec3 upLeftTriangleUpper = calculateSufaceNormal(positionData.at(index), positionData.at(upLeft), positionData.at(upMiddle));
+			//Now we will get the surface normals for all relavent triangles. 
+			vec3 upRightTriangle = calculateSufaceNormal(positionData.at(index), positionData.at(midRight), positionData.at(upMiddle));
+			vec3 downRightTriangleUpper = calculateSufaceNormal(positionData.at(index), positionData.at(lowRight), positionData.at(midRight));
+			vec3 downRightTriangleLower = calculateSufaceNormal(positionData.at(index), positionData.at(lowMiddle), positionData.at(lowRight));
+			vec3 downLeftTriangle = calculateSufaceNormal(positionData.at(index), positionData.at(midLeft), positionData.at(lowMiddle));
+			vec3 upLeftTriangleLower = calculateSufaceNormal(positionData.at(index), positionData.at(upLeft), positionData.at(midLeft));
+			vec3 upLeftTriangleUpper = calculateSufaceNormal(positionData.at(index), positionData.at(upMiddle), positionData.at(upLeft));
 
 			vec3 thisNormal = glm::normalize(upRightTriangle + downRightTriangleUpper + downRightTriangleLower + downLeftTriangle + upLeftTriangleLower + upLeftTriangleUpper);
 			normalData.push_back(thisNormal);
-
-			
 
 		}
 	}
